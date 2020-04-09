@@ -1,0 +1,83 @@
+<%- include ('../partials/header'); -%>
+<br>
+<div class="row" style="padding: 20px;">
+    <form method="post" class="col s12">
+        <h3>DODAJ KATEGORIJU:</h3>
+        <br>
+
+        <div class="message"><%= message %><br><br></div>
+
+        <div class="form-group row">
+            <label for="KOMP_KATEGORIJA" class="col-2 col-form-label">ID kategorije</label>
+            <div class="col-10">
+                <input type="text" name="KOMP_KATEGORIJA" class="form-control" required pattern="^[A-z0-9]{2}$"
+                title="ID mora da sadrzi tacno dva slova ili cifre koje su jedinstvene.">
+            </div>
+        </div>
+
+        <div class="form-group row">
+            <label for="pgo" class="col-2 col-form-label">Polje > Grupa > Oblast</label>
+            <div class="col-10">
+                <select class="form-control" name="pgo">
+                    <% pgoLista.forEach(function(pgo, index) { %>
+                    <option value="<%= pgo.key %>">
+                        <%= pgo.value %>
+                    </option>
+                    <% }); %>
+                </select>
+            </div>
+        </div>
+
+        <!-- <div class="form-group row">
+            <label for="PO_POLJE" class="col-2 col-form-label">Polje</label>
+            <div class="col-10">
+                <select class="form-control" name="PO_POLJE">
+                    <option value="dh">Drustveno humanisticke nauke</option>
+                    <option value="mn">Medicinske nauke</option>
+                    <option value="pm">Prirodno matematicke nauke</option>
+                    <option value="tt">Tehnicko tehnoloske nauke</option>
+                </select>
+            </div>
+        </div>
+        <div class="form-group row">
+            <label for="GRU_GRUPA" class="col-2 col-form-label">Grupa</label>
+            <div class="col-10">
+                <select class="form-control" name="GRU_GRUPA">
+                    <option value="ek">Ekonomija</option>
+                    <option value="bn">Biologija</option>
+                    <option value="ah">Arhitektura</option>
+                </select>
+            </div>
+        </div>
+        <div class="form-group row">
+            <label for="OBL_OBLAST" class="col-2 col-form-label">Oblast</label>
+            <div class="col-10">
+                <select class="form-control" name="OBL_OBLAST">
+                    <option value="a1">Akademska oblast</option>
+                    <option value="v1">Visokoskolska oblast</option>
+                    <option value="f1">Fakultetska oblast</option>
+                </select>
+            </div>
+        </div> -->
+
+        <div class="form-group row">
+            <label for="KOMP_NAZIV" class="col-2 col-form-label">Naziv</label>
+            <div class="col-10">
+                <input type="text" name="KOMP_NAZIV" class="form-control">
+            </div>
+        </div>
+        <div class="form-group row">
+            <label for="KOMP_OPIS" class="col-2 col-form-label">Opis</label>
+            <div class="col-10">
+                <input type="text" name="KOMP_OPIS" class="form-control">
+            </div>
+        </div>
+        <div class="form-group row">
+            <label class="col-2 col-form-label">&nbsp;</label>
+            <div class="col-10">
+                <input type="submit" name="submit" value="Dodaj" class="btn btn-primary btn-lg">
+            </div>
+        </div>
+    </form>
+</div>
+<%- include ('../partials/footer'); -%>

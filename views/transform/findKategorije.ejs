@@ -1,0 +1,121 @@
+<%- include ('../partials/header'); -%>
+<div class="">
+    <div class=""></div>
+    <br>
+    <div class="col s12">
+        <div class="col s12" style="padding: 20;">
+            <a href="/kategorije/add/" class="btn btn-success btn-lg">Dodaj kategoriju</a>
+        </div>
+
+        <% if (kategorije.length > 0) { %>
+        <table class="table">
+            <tbody>
+                <div class="form-group" style="width: 10vw; float: right;">
+                   <!-- <select id="demo_overview_minimal" class="form-control" style="background-color: lightblue;"
+                        data-role="select-dropdown" data-profile="minimal">
+                        <option>Sortiraj</option>
+                        <option>Sortiraj A-Z</option>
+                        <option>Sortiraj Z-A</option>
+                    </select>-->
+                </div>
+                <% kategorije.forEach(function(kategorija, index) { %>
+                <tr>
+                    <th><%= kategorija.naziv %>
+                        <a href="/kategorije/delete/<%= kategorija.PO_POLJE %>/<%= kategorija.GRU_GRUPA %>/<%= kategorija.OBL_OBLAST %>/<%= kategorija.KOMP_KATEGORIJA %>/"
+                            class="btn btn-danger" onclick="return confirm('Da li ste sigurni?');"
+                            style="float: right;">Obriši</a>
+                        <a href="/kategorije/edit/<%= kategorija.PO_POLJE %>/<%= kategorija.GRU_GRUPA %>/<%= kategorija.OBL_OBLAST %>/<%= kategorija.KOMP_KATEGORIJA %>/"
+                            class="btn btn-success" style="float: right;">Izmeni</a>
+                        <a href="/kategorije/add-kompetencija/<%= kategorija.PO_POLJE %>/<%= kategorija.GRU_GRUPA %>/<%= kategorija.OBL_OBLAST %>/<%= kategorija.KOMP_KATEGORIJA %>/"
+                            class="btn btn-secondary" style="float: right;">Dodaj kompetenciju
+                        </a>
+                    </th>
+                </tr>
+
+                <tr>
+                    <td><%= kategorija.opis %></td>
+                </tr>
+                <tr>
+                    <td>
+                        <div class="h6">
+                            Kompetencije
+                        </div>
+
+                        <table class="table table-sm table-condensed">
+                            <thead>
+                                <tr>
+                                    <th>Naziv</th>
+                                    <th>Opis</th>
+                                    <th>Opcije</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <% kategorija.kompetencije.forEach(function(kompetencija, index) { %>
+                                <tr>
+                                    <td><%= kompetencija.naziv %></td>
+                                    <td><%= kompetencija.opis %></td>
+                                    <td>
+                                        <a href="/kompetencija/delete-kompetencije/<%= kompetencija.id %>/"
+                                            class="btn btn-danger" onclick="return confirm('Da li ste sigurni?');"
+                                            style="float: right;">Obriši</a>
+                                        <a href="/kompetencija/edit-kompetencija/<%= kompetencija.id %>/"
+                                            class="btn btn-success" style="float: right;">Izmeni</a>
+
+                                    </td>
+                                </tr>
+                                <% }); %>
+                            </tbody>
+
+                        </table>
+                        <hr style="border: 2px solid #cfe8b0; border-radius: 5px;">
+                    </td>
+                </tr>
+                <% }); %>
+            </tbody>
+
+        </table>
+        <p>
+            <button class="btn btn-warning btn-sm" type="button" data-toggle="collapse" data-target="#collapseExample"
+                aria-expanded="false" aria-controls="collapseExample">
+                JSON Podaci
+            </button>
+
+            <button onclick="downloadJson();" class="btn btn-sm btn-dark">Preuzmi JSON</button>
+
+            <a href="/kategorije/saveDocument" class="btn btn-sm btn-info">Generiši dokument</a>
+        </p>
+        <div class="collapse" id="collapseExample">
+            <div class="card card-body">
+                <pre id="json"><%= kategorijeJson %></pre>
+            </div>
+        </div>
+
+        <% }else{ %>
+        <p>
+            <strong>There are no records available</strong>
+        </p>
+        <% } %>
+    </div>
+</div>
+</div>
+
+<script>
+    function downloadJson() {
+        let filename = 'dokument-kategorije.json';
+        let data = document.getElementById('json').innerText;
+        download(filename, data);
+    }
+
+    function download(filename, text) {
+        var element = document.createElement('a');
+        element.setAttribute('href', 'data:text/plain;charset=utf-8,' + encodeURIComponent(text));
+        element.setAttribute('download', filename);
+
+        element.style.display = 'none';
+        document.body.appendChild(element);
+
+        element.click();
+
+        document.body.removeChild(element);
+    }</script>
+<%- include ('../partials/footer'); -%>

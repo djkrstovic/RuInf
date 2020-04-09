@@ -1,0 +1,37 @@
+<%- include ('../partials/header'); -%>
+<br>
+
+
+
+<h3>Lista kompetencija za predmet <%= imePredmeta %></h3>
+
+
+<div class="row" style="padding: 20px;">
+    <a href="/predmeti/" class="btn btn-secondary" style="float: right;">Nazad</a> &nbsp;&nbsp;
+    <a href="/predmeti/addKompetencija/<%= akronim %>/<%= verzija %>/" class="btn btn-primary" style="float: right;">Dodaj kompetenciju</a>
+    
+    <table class="table table-sm table-hover" role="table">
+        <thead>
+            <tr>
+                <th>Naziv</th>
+                <th>Opis</th>
+                <th>Opcije</th>
+            </tr>
+        </thead>
+        <tbody>
+            <% kompetencije.forEach(kompetencija => { %>
+            <tr>
+                <td><%= kompetencija.KO_NAZIV %></td>
+                <td><%= kompetencija.KO_OPIS %></td>
+                <td>
+                    <a href="/predmeti/deleteKompetencija/<%= akronim %>/<%= verzija %>/<%= kompetencija.KO_KOMPETENCIJA %>"
+                        class="btn btn-danger"
+                        onclick="return confirm('Da li ste sigurni?');"
+                        style="float: right;">Obriši</a>
+                </td>
+            </tr>
+            <% }) %>
+        </tbody>
+    </table>
+</div>
+<%- include ('../partials/footer'); -%>

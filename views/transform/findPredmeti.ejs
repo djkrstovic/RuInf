@@ -1,0 +1,109 @@
+<%- include ('../partials/header'); -%>
+<div class="">
+    <div class=""></div>
+    <br>
+    <div class="col s12">
+        <div class="col s12" style="padding: 20;">
+            <a href="/predmeti/add/" class="btn btn-success btn-lg">Dodaj predmet</a>
+        </div>
+
+        <% if (predmeti.length > 0) { %>
+            <table class="table">
+                <tbody>
+                        <tr>
+                            <td>
+                                <table class="table table-sm table-condensed">
+                                    <thead>
+                                        <tr>
+                                            <th>Naziv predmeta</th>
+                                            <th>Izborni</th>
+                                            <th>Broj casova</th>
+                                            <th>Tip</th>
+                                            <th>Vid nastave</th>
+                                            <th>Kompetencije</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <% predmeti.forEach(function(predmet, index) { %>
+                                            <tr>
+                                                <td><%= predmet.naziv %></td>
+                                                <td><%= predmet.izbor %></td>
+                                                <td><%= predmet.brojCasova %></td>
+                                                <td><%= predmet.tipUstanoveNaziv %></td>
+                                                <td><%= predmet.vidNaziv %></td>
+                                                <td><%= predmet.kompetencijeImena %></td>
+                                                <td>
+                                                    <a href="/predmeti/delete/<%= predmet.akronim %>/<%= predmet.verzija %>/"
+                                                       class="btn btn-danger"
+                                                       onclick="return confirm('Da li ste sigurni?');"
+                                                       style="float: right;">Obriši</a>
+                                                    <a href="/predmeti/edit/<%= predmet.akronim %>/<%= predmet.verzija %>/"
+                                                       class="btn btn-success"
+                                                       style="float: right;">Izmeni</a>
+                                                    <a href="/predmeti/kompetencije/<%= predmet.akronim %>/<%= predmet.verzija %>/"
+                                                       class="btn btn-secondary"
+                                                       style="float: right;">Lista kompetencija</a>
+                                                </td>
+                                            </tr>
+                                        <% }); %>
+                                    </tbody>
+
+                                </table>
+                                <hr style="border: 2px solid #cfe8b0; border-radius: 5px;">
+                            </td>
+                        </tr>
+                </tbody>
+
+            </table>
+            <p>
+                <button
+                    class="btn btn-warning btn-sm"
+                    type="button"
+                    data-toggle="collapse"
+                    data-target="#collapseExample"
+                    aria-expanded="false"
+                    aria-controls="collapseExample">
+                    JSON Podaci
+                </button>
+
+                <button onclick="downloadJson();" class="btn btn-sm btn-dark">Preuzmi JSON</button>
+
+                <a href="/predmeti/saveDocument" class="btn btn-sm btn-info">Generiši dokument</a>
+            </p>
+            <div class="collapse" id="collapseExample">
+                <div class="card card-body">
+                    <pre id="json"><%= JSON.stringify(predmeti, null, 4) %></pre>
+                </div>
+            </div>
+            <% }else{ %>
+                <p>
+                    <strong>There are no records available</strong>
+                </p>
+            <% } %>
+    </div>
+
+</div>
+</div>
+
+<script>
+
+function downloadJson() {
+    let filename = 'dokument-predmeti.json';
+    let data = document.getElementById('json').innerText;
+    download(filename, data);
+}
+
+function download(filename, text) {
+    var element = document.createElement('a');
+    element.setAttribute('href', 'data:text/plain;charset=utf-8,' + encodeURIComponent(text));
+    element.setAttribute('download', filename);
+
+    element.style.display = 'none';
+    document.body.appendChild(element);
+
+    element.click();
+
+    document.body.removeChild(element);
+}</script>
+
+<%- include ('../partials/footer'); -%>
